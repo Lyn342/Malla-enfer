@@ -93,7 +93,53 @@
         { nombre: 'Estadística General', prerequisitos: ['Matemática General'] },
         { nombre: 'Educación Ambiental', prerequisitos: ['Desempeño Universitario'] },
       ],
-      // ...continúa con los demás ciclos (III al X) de manera similar
+      'Ciclo III': [
+        { nombre: 'Morfofisiología II', prerequisitos: ['Morfofisiología I'] },
+        { nombre: 'Liderazgo en Enfermería', prerequisitos: ['Identidad Personal y Profesión'] },
+        { nombre: 'Inglés' },
+        { nombre: 'Cuidado en Enfermería', prerequisitos: ['Introducción a la Enfermería', 'Identidad Personal y Profesión'] },
+        { nombre: 'Bioquímica', prerequisitos: ['Química Orgánica'] },
+        { nombre: 'Biofísica', prerequisitos: ['Matemática General'] },
+      ],
+      'Ciclo IV': [
+        { nombre: 'Nutrición y Dietética en Enfermería', prerequisitos: ['Cuidado en Enfermería', 'Bioquímica'] },
+        { nombre: 'Microbiología y Parasitología', prerequisitos: ['Bioquímica'] },
+        { nombre: 'Enfermería Quirúrgica', prerequisitos: ['Morfofisiología II', 'Cuidado en Enfermería'] },
+        { nombre: 'Enfermería en Crecimiento y Desarrollo', prerequisitos: ['Morfofisiología II', 'Cuidado en Enfermería'] },
+      ],
+      'Ciclo V': [
+        { nombre: 'Farmacología Aplicada a la Enfermería', prerequisitos: ['Enfermería en Crecimiento y Desarrollo', 'Microbiología y Parasitología'] },
+        { nombre: 'Epidemiología Aplicada a la Enfermería', prerequisitos: ['Estadística General'] },
+        { nombre: 'Enfermería en la Salud de la Mujer', prerequisitos: ['Enfermería Quirúrgica', 'Enfermería en Crecimiento y Desarrollo'] },
+        { nombre: 'Enfermería Familiar y Comunitaria', prerequisitos: ['Enfermería en Crecimiento y Desarrollo'] },
+      ],
+      'Ciclo VI': [
+        { nombre: 'Investigación en Salud', prerequisitos: ['Epidemiología Aplicada a la Enfermería'] },
+        { nombre: 'Enfermería en la Salud del Niño', prerequisitos: ['Enfermería en la Salud de la Mujer'] },
+        { nombre: 'Enfermería en Emergencias y Desastres', prerequisitos: ['Enfermería en la Salud de la Mujer', 'Farmacología Aplicada a la Enfermería'] },
+        { nombre: 'Bioética', prerequisitos: ['Epidemiología Aplicada a la Enfermería'] },
+      ],
+      'Ciclo VII': [
+        { nombre: 'Enfermería en Salud Mental y Psiquiatría', prerequisitos: ['Enfermería en la Salud del Niño', 'Psicología General'] },
+        { nombre: 'Enfermería en Atención Primaria', prerequisitos: ['Bioética', 'Enfermería Familiar y Comunitaria'] },
+        { nombre: 'Enfermería Basada en la Evidencia I', prerequisitos: ['Bioética', 'Investigación en Salud'] },
+        { nombre: 'Enfermería en la Salud del Adulto', prerequisitos: ['Enfermería en Emergencias y Desastres', 'Enfermería en la Salud del Niño'] },
+      ],
+      'Ciclo VIII': [
+        { nombre: 'Seminario de Tesis', prerequisitos: ['Enfermería Basada en la Evidencia I'] },
+        { nombre: 'Gestión en los Servicios de Enfermería', prerequisitos: ['Enfermería Basada en la Evidencia I', 'Enfermería en la Salud del Adulto'] },
+        { nombre: 'Enfermería en Salud Ambiental', prerequisitos: ['Educación Ambiental', 'Enfermería en Atención Primaria'] },
+        { nombre: 'Enfermería en la Salud del Adulto Mayor', prerequisitos: ['Enfermería en la Salud del Adulto', 'Enfermería en Atención Primaria'] },
+      ],
+      'Ciclo IX': [
+        { nombre: 'Internado I', prerequisitos: ['Ciclo I', 'Ciclo II', 'Ciclo III', 'Ciclo IV', 'Ciclo V', 'Ciclo VI', 'Ciclo VII', 'Ciclo VIII'] },
+        { nombre: 'Enfermería Basada en la Evidencia II', prerequisitos: ['Ciclo I', 'Ciclo II', 'Ciclo III', 'Ciclo IV', 'Ciclo V', 'Ciclo VI', 'Ciclo VII', 'Ciclo VIII'] },
+      ],
+      'Ciclo X': [
+        { nombre: 'Trabajo de Investigación', prerequisitos: ['Enfermería Basada en la Evidencia II', 'Internado I'] },
+        { nombre: 'Internado II', prerequisitos: ['Internado I'] },
+        { nombre: 'Casos Clínicos - Enfermería', prerequisitos: ['Ciclo I', 'Ciclo II', 'Ciclo III', 'Ciclo IV', 'Ciclo V', 'Ciclo VI', 'Ciclo VII', 'Ciclo VIII', 'Ciclo IX'] },
+      ]
     };
 
     const estado = JSON.parse(localStorage.getItem('estadoCursos') || '{}');
