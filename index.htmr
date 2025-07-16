@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Curricular - Enfermería</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8fafc;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 10px;
+    }
+    .ciclo {
+      background-color: #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .ciclo h2 {
+      font-size: 16px;
+      text-align: center;
+      color: #2d3748;
+    }
+    .curso {
+      background-color: #fff;
+      border: 2px solid #cbd5e0;
+      margin: 5px 0;
+      padding: 6px;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      transition: 0.2s ease;
+    }
+    .curso.aprobado {
+      background-color: #c6f6d5;
+      text-decoration: line-through;
+    }
+    .curso.bloqueado {
+      background-color: #edf2f7;
+      color: #a0aec0;
+      cursor: not-allowed;
+    }
+    .curso:hover:not(.bloqueado) {
+      background-color: #bee3f8;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: #2d3748;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      top: -30px;
+      left: 0;
+      z-index: 10;
+      font-size: 12px;
+      display: none;
+      white-space: pre-line;
+    }
+    .curso.bloqueado:hover .tooltip {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Curricular Interactiva - Enfermería</h1>
+  <div class="grid" id="malla"></div>
+
+  <script>
+    const cursos = {
+      'Ciclo I': [
+        { nombre: 'Química General' },
+        { nombre: 'Matemática General' },
+        { nombre: 'Lengua y Comunicación' },
+        { nombre: 'Introducción a la Enfermería' },
+        { nombre: 'Desempeño Universitario' },
+        { nombre: 'Biología' },
+      ],
+      'Ciclo II': [
+        { nombre: 'Realidad Nacional', prerequisitos: ['Lengua y Comunicación', 'Desempeño Universitario'] },
+        { nombre: 'Química Orgánica', prerequisitos: ['Química General'] },
+        { nombre: 'Psicología General', prerequisitos: ['Lengua y Comunicación'] },
+        { nombre: 'Morfofisiología I', prerequisitos: ['Biología'] },
+        { nombre: 'Identidad Personal y Profesión', prerequisitos: ['Introducción a la Enfermería'] },
+        { nombre: 'Estadística General', prerequisitos: ['Matemática General'] },
+        { nombre: 'Educación Ambiental', prerequisitos: ['Desempeño Universitario'] },
+      ],
+      // ...continúa con los demás ciclos (III al X) de manera similar
+    };
+
+    const estado = JSON.parse(localStorage.getItem('estadoCursos') || '{}');
+
+    function guardarEstado() {
+      localStorage.setItem('estadoCursos', JSON.stringify(estado));
+    }
+
+    function estaAprobado(nombre) {
+      return estado[nombre];
+    }
+
+    function crearCurso(curso) {
+      const div = document.createElement('div');
+      div.className = 'curso';
+      div.textContent = curso.nombre;
+      if (estaAprobado(curso.nombre)) div.classList.add('aprobado');
+
+      const faltan = (curso.prerequisitos || []).filter(p => !estaAprobado(p));
+      if (faltan.length > 0) {
+        div.classList.add('bloqueado');
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = 'Faltan: ' + faltan.join(',\n');
+        div.appendChild(tooltip);
+      } else {
+        div.addEventListener('click', () => {
+          estado[curso.nombre] = !estado[curso.nombre];
+          guardarEstado();
+          render();
+        });
+      }
+      return div;
+    }
+
+    function render() {
+      const malla = document.getElementById('malla');
+      malla.innerHTML = '';
+      Object.entries(cursos).forEach(([ciclo, lista]) => {
+        const columna = document.createElement('div');
+        columna.className = 'ciclo';
+        const titulo = document.createElement('h2');
+        titulo.textContent = ciclo;
+        columna.appendChild(titulo);
+        lista.forEach(curso => columna.appendChild(crearCurso(curso)));
+        malla.appendChild(columna);
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>
